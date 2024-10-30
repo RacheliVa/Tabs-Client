@@ -8,6 +8,7 @@ const ColorPalette = ({ onColorSelect }) => {
         <div className={styles.paletteContainer}>
             {colors.map((color) => (
                 <div
+                
                     key={color}
                     className={styles.colorCircle}
                     style={{ backgroundColor: color }}

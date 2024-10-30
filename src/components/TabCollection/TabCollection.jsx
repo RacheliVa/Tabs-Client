@@ -2,17 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { getTabs, createTab, updateTab, deleteTab } from '../../services/tabService.js';
 import Tab from '../Tab/Tab.jsx';
 import styles from './TabCollection.module.css';
-import { tab } from '@testing-library/user-event/dist/tab.js';
 
 function TabCollection() {
-
     const [tabs, setTabs] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const data = await getTabs();
-                console.log(data);
                 setTabs(data);
                 console.log('Data fetched successfully:', data);
             } catch (err) {
@@ -38,7 +35,7 @@ function TabCollection() {
             const tabToAdd = {
                 description: "New task",
                 priorityLevel: "Low"
-            }
+            };
             const newTab = await createTab(tabToAdd);
             setTabs([...tabs, newTab]);
         } catch (err) {
@@ -61,10 +58,10 @@ function TabCollection() {
 
     const handleColorChange = (id, newColor) => {
         const priorityColors = [
-            { priorityLevel: 'critical',  color: '#ff4d4d' },
-            { priorityLevel: 'high',  color: '#ffcc00' },
+            { priorityLevel: 'critical', color: '#ff4d4d' },
+            { priorityLevel: 'high', color: '#ffcc00' },
             { priorityLevel: 'medium', color: '#ffcc99' },
-            { priorityLevel: 'low',  color: '#99ff99' }
+            { priorityLevel: 'low', color: '#99ff99' }
         ];
         const foundPriority = priorityColors.find(item => item.color === newColor);
         updateTabField(id, { priorityLevel: foundPriority.priorityLevel });
@@ -74,9 +71,8 @@ function TabCollection() {
         updateTabField(id, { text: newText });
     };
 
-
     return (
-        <div >
+        <div className={styles.container}>
             {tabs.map(tab => (
                 <Tab
                     key={tab.id}
@@ -86,9 +82,9 @@ function TabCollection() {
                     onTextChange={handleTextChange}
                 />
             ))}
-            <button onClick={handleAddTab} >+</button>
+            <button onClick={handleAddTab} className={styles.addButton}>+</button>
         </div>
-    )
+    );
 }
 
 export default TabCollection;

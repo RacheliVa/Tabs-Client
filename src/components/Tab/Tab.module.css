@@ -1,0 +1,47 @@
+
+.taskCard {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    width: 250px; 
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); 
+    color: #000; 
+    position: relative;
+}
+
+.critical {
+    background-color: #ff4d4d; 
+}
+
+.high {
+    background-color: #ffcc00; 
+}
+
+.medium {
+    background-color: #ffcc99; 
+}
+
+.low {
+    background-color: #99ff99; 
+}
+
+.colorCircle {
+    width: 20px; 
+    height: 20px;
+    border-radius: 50%; 
+    border: 2px solid white; 
+    display: inline-block; 
+    cursor: pointer; 
+    position: absolute; 
+    bottom: 10px;
+    right: 10px;
+}
+
+.deleteButton {
+    background: none; 
+    border: none; 
+    padding: 0; 
+    display: flex;
+    align-items: center;
+}

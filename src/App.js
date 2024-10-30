@@ -1,23 +1,19 @@
-import logo from './logo.svg';
+import React from 'react';
+// import Tab from './components/Tab/Tab.jsx'; 
+import TabCollection from './components/TabCollection/TabCollection.jsx';
 import './App.css';
 
 function App() {
+  // const task = {
+  //   id: 0,
+  //   description: "Complete the new project for card design",
+  //   priorityLevel: "Critical"
+  // };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Task List</h1>
+      <TabCollection /> 
     </div>
   );
 }

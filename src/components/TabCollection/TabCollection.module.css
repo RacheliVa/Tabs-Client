@@ -1,0 +1,31 @@
+.container {
+    background-color: #333; /* צבע רקע כהה */
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.tabList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+}
+
+.addButton {
+    background: none;
+    color: #ccc;
+    font-size: 2rem;
+    border: 2px solid #555;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.addButton:hover {
+    color: white;
+    border-color: white;
+}

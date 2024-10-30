@@ -2,19 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { getTabs, createTab, updateTab, deleteTab } from '../../services/tabService.js';
 import Tab from '../Tab/Tab.jsx';
 import styles from './TabCollection.module.css';
-import { tab } from '@testing-library/user-event/dist/tab.js';
 
 function TabCollection() {
-
     const [tabs, setTabs] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const data = await getTabs();
-                console.log(data);
                 setTabs(data);
-                console.log('Data fetched successfully:', data);
             } catch (err) {
                 console.log('Error fetching data:', err);
             }
@@ -25,9 +21,7 @@ function TabCollection() {
     const handleDelete = async (id) => {
         try {
             await deleteTab(id);
-            const updatedTabs = tabs.filter(card => card.id !== id);
-            setTabs(updatedTabs);
-            console.log('Tab deleted successfully:', id);
+            setTabs(tabs.filter(tab => tab.id !== id));
         } catch (err) {
             console.log('Error deleting tab:', err);
         }
@@ -35,60 +29,27 @@ function TabCollection() {
 
     const handleAddTab = async () => {
         try {
-            const tabToAdd = {
-                description: "New task",
-                priorityLevel: "Low"
-            }
-            const newTab = await createTab(tabToAdd);
+            const newTab = await createTab({ description: "New Task", priorityLevel: "low" });
             setTabs([...tabs, newTab]);
         } catch (err) {
             console.log('Error adding tab:', err);
         }
     };
 
-    const updateTabField = async (id, updates) => {
-        try {
-            await updateTab(id, updates);
-            const updatedTabs = tabs.map(tab =>
-                tab.id === id ? { ...tab, ...updates } : tab
-            );
-            setTabs(updatedTabs);
-            console.log('Tab updated successfully:', id, updates);
-        } catch (err) {
-            console.log('Error updating tab:', err);
-        }
-    };
-
-    const handleColorChange = (id, newColor) => {
-        const priorityColors = [
-            { priorityLevel: 'critical',  color: '#ff4d4d' },
-            { priorityLevel: 'high',  color: '#ffcc00' },
-            { priorityLevel: 'medium', color: '#ffcc99' },
-            { priorityLevel: 'low',  color: '#99ff99' }
-        ];
-        const foundPriority = priorityColors.find(item => item.color === newColor);
-        updateTabField(id, { priorityLevel: foundPriority.priorityLevel });
-    };
-
-    const handleTextChange = (id, newText) => {
-        updateTabField(id, { text: newText });
-    };
-
-
     return (
-        <div >
-            {tabs.map(tab => (
-                <Tab
-                    key={tab.id}
-                    task={tab}
-                    onDelete={handleDelete}
-                    onColorChange={handleColorChange}
-                    onTextChange={handleTextChange}
-                />
-            ))}
-            <button onClick={handleAddTab} >+</button>
+        <div className={styles.container}>
+            <div className={styles.tabList}>
+                {tabs.map(tab => (
+                    <Tab
+                        key={tab.id}
+                        task={tab}
+                        onDelete={handleDelete}
+                    />
+                ))}
+                <button onClick={handleAddTab} className={styles.addButton}>+</button>
+            </div>
         </div>
-    )
+    );
 }
 
 export default TabCollection;

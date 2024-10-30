@@ -1,62 +1,45 @@
 import React, { useState } from 'react';
-import styles from './Tab.module.css';
 import { FaTrash } from 'react-icons/fa';
-import ColorPalette from '../ColorPalette/ColorPalette';
+import ColorPalette from '../ColorPalette/ColorPalette.jsx';
+import styles from './Tab.module.css';
 
-
-const Tab = ({ task,onDelete,onColorChange,onTextChange }) => {
+const Tab = ({ task, onDelete, onColorChange }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editedDescription, setEditedDescription] = useState(task.description);
-    const [showPalette, setShowPalette] = useState(false); 
-    const priorityClass = task.priorityLevel ? task.priorityLevel.toLowerCase() : '';
+    const [showPalette, setShowPalette] = useState(false);
 
     const handleSave = () => {
-        onTextChange(task.id,editedDescription);
         setIsEditing(false);
     };
 
-    const handleDelete = () => {
-        onDelete(task.id);
-    };
-
     const handleColorSelect = (color) => {
-        onColorChange(task.id,color);
-        console.log("Selected color:", color);
-        setShowPalette(false); 
-
+        onColorChange(task.id, color);
+        setShowPalette(false); // לסגור את הפלטה אחרי הבחירה
     };
 
     return (
-        <div className={`${styles.taskCard} ${styles[priorityClass]}`}>
-            <h3>Task ID: {task.id}</h3>
+        <div className={`${styles.tab} ${styles[task.priorityLevel.toLowerCase()]}`}>
             {isEditing ? (
-                <div>
-                    <input
-                        type="text"
-                        value={editedDescription}
-                        onChange={(e) => setEditedDescription(e.target.value)}
-                        onBlur={handleSave} 
-                        autoFocus 
-                    />
-                </div>
+                <input
+                    type="text"
+                    value={editedDescription}
+                    onChange={(e) => setEditedDescription(e.target.value)}
+                    onBlur={handleSave}
+                    className={styles.input}
+                    autoFocus
+                />
             ) : (
-                <div onClick={() => setIsEditing(true)} style={{ cursor: 'pointer' }}>
-                    {editedDescription}
-                </div>
+                <p onClick={() => setIsEditing(true)} className={styles.text}>{editedDescription}</p>
             )}
-            <button onClick={handleDelete} className={styles.deleteButton}>
+            <button onClick={() => setShowPalette(!showPalette)} className={styles.colorButton}>
+                ●
+            </button>
+            {showPalette && <ColorPalette onSelectColor={handleColorSelect} />}
+            <button onClick={() => onDelete(task.id)} className={styles.deleteButton}>
                 <FaTrash />
             </button>
-            <div
-                className={styles.colorCircle}
-                onClick={() => setShowPalette(!showPalette)} 
-                style={{ backgroundColor: priorityClass }}
-            ></div>
-            {showPalette && <ColorPalette onColorSelect={handleColorSelect} />} 
         </div>
     );
 };
 
 export default Tab;
-
-

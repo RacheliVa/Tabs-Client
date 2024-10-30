@@ -60,7 +60,7 @@ function TabCollection() {
         const priorityColors = [
             { priorityLevel: 'critical', color: '#ff4d4d' },
             { priorityLevel: 'high', color: '#ffcc00' },
-            { priorityLevel: 'medium', color: '#ffcc99' },
+            { priorityLevel: 'treated', color: '#5878e3' },
             { priorityLevel: 'low', color: '#99ff99' }
         ];
         const foundPriority = priorityColors.find(item => item.color === newColor);
@@ -72,6 +72,8 @@ function TabCollection() {
     };
 
     return (
+        <div>
+        <button onClick={handleAddTab} className={styles.addButton}>+</button>
         <div className={styles.container}>
             {tabs.map(tab => (
                 <Tab
@@ -82,7 +84,7 @@ function TabCollection() {
                     onTextChange={handleTextChange}
                 />
             ))}
-            <button onClick={handleAddTab} className={styles.addButton}>+</button>
+        </div>
         </div>
     );
 }

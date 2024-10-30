@@ -14,6 +14,12 @@ const Tab = ({ task, onDelete, onColorChange, onTextChange }) => {
         setIsEditing(false);
     };
 
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            handleSave();
+        }
+    };
+
     const handleDelete = () => {
         onDelete(task.id);
     };
@@ -32,6 +38,7 @@ const Tab = ({ task, onDelete, onColorChange, onTextChange }) => {
                         value={editedDescription}
                         onChange={(e) => setEditedDescription(e.target.value)}
                         onBlur={handleSave} 
+                        onKeyDown={handleKeyDown} // הוספת מאזין לאירוע keydown
                         autoFocus 
                         className={styles.input}
                     />

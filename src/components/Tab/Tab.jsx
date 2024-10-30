@@ -3,6 +3,7 @@ import styles from './Tab.module.css';
 import { FaTrash } from 'react-icons/fa';
 import ColorPalette from '../ColorPalette/ColorPalette';
 
+
 const Tab = ({ task,onDelete,onColorChange,onTextChange }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editedDescription, setEditedDescription] = useState(task.description);
@@ -10,17 +11,16 @@ const Tab = ({ task,onDelete,onColorChange,onTextChange }) => {
     const priorityClass = task.priorityLevel ? task.priorityLevel.toLowerCase() : '';
 
     const handleSave = () => {
-        console.log("onSave called with:", editedDescription);
         onTextChange(task.id,editedDescription);
         setIsEditing(false);
     };
 
     const handleDelete = () => {
-        console.log("onDelete called for Task ID:", task.id);
         onDelete(task.id);
     };
 
     const handleColorSelect = (color) => {
+        onColorChange(task.id,color);
         console.log("Selected color:", color);
         setShowPalette(false); 
 

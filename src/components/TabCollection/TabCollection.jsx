@@ -25,7 +25,7 @@ function TabCollection() {
     const handleDelete = async (id) => {
         try {
             await deleteTab(id);
-            const updatedTabs = tabs.filter(card => card.id!== id);
+            const updatedTabs = tabs.filter(card => card.id !== id);
             setTabs(updatedTabs);
             console.log('Tab deleted successfully:', id);
         } catch (err) {
@@ -35,10 +35,12 @@ function TabCollection() {
 
     const handleAddTab = async () => {
         try {
-            const tabToAdd = {color: '#99ff99', text: 'New task'}
-            const newTab = await createTab(tabToAdd );
+            const tabToAdd = {
+                description: "New task",
+                priorityLevel: "Low"
+            }
+            const newTab = await createTab(tabToAdd);
             setTabs([...tabs, newTab]);
-            console.log('Tab added successfully:', newTab);
         } catch (err) {
             console.log('Error adding tab:', err);
         }
@@ -47,7 +49,7 @@ function TabCollection() {
     const updateTabField = async (id, updates) => {
         try {
             await updateTab(id, updates);
-            const updatedTabs = tabs.map(tab => 
+            const updatedTabs = tabs.map(tab =>
                 tab.id === id ? { ...tab, ...updates } : tab
             );
             setTabs(updatedTabs);
@@ -56,24 +58,31 @@ function TabCollection() {
             console.log('Error updating tab:', err);
         }
     };
-    
+
     const handleColorChange = (id, newColor) => {
-        updateTabField(id, { color: newColor });
+        const priorityColors = [
+            { priorityLevel: 'critical',  color: '#ff4d4d' },
+            { priorityLevel: 'high',  color: '#ffcc00' },
+            { priorityLevel: 'medium', color: '#ffcc99' },
+            { priorityLevel: 'low',  color: '#99ff99' }
+        ];
+        const foundPriority = priorityColors.find(item => item.color === newColor);
+        updateTabField(id, { priorityLevel: foundPriority.priorityLevel });
     };
-    
+
     const handleTextChange = (id, newText) => {
         updateTabField(id, { text: newText });
     };
-    
+
 
     return (
         <div >
             {tabs.map(tab => (
-                <Tab 
-                    key={tab.id} 
-                    task={tab} 
-                    onDelete={handleDelete} 
-                    onColorChange={handleColorChange} 
+                <Tab
+                    key={tab.id}
+                    task={tab}
+                    onDelete={handleDelete}
+                    onColorChange={handleColorChange}
                     onTextChange={handleTextChange}
                 />
             ))}
